@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "simbot.core.scannerPackage",
+      "type": "java.lang.String",
+      "description": "Description for simbot.core.scannerPackage."
+    },
+    {
+      "name": "simbot.core.bots",
+      "type": "java.lang.String",
+      "description": "Description for simbot.core.bots."
+    }
+  ] }
