@@ -67,3 +67,15 @@ CREATE TABLE `localpic` (
   PRIMARY KEY (`UUID`) USING BTREE,
   UNIQUE KEY `idximg` (`img_path`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='图片信息表';
+
+#2020/9/22
+CREATE TABLE `mholiday` (
+  `UUID` varchar(70) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'UUID',
+  `qq_code` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'QQ号',
+  `holiday` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '放假信息',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `holiday_time` datetime DEFAULT NULL COMMENT '放假时间',
+  `h_type` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '1、自定义节假日  2、法定节假日',
+  PRIMARY KEY (`UUID`),
+  UNIQUE KEY `idx_holionly` (`qq_code`,`holiday`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='放假倒计时表';

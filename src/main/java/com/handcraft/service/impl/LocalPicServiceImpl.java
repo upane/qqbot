@@ -44,12 +44,7 @@ public class LocalPicServiceImpl implements LocalPicService {
         byte a;
         File[] fdir ;
         try{
-//            String fileName = this.getClass().getClassLoader().getResource(filename).getPath();//获取文件路径
-//            InputStream is = this.getClass().getResourceAsStream("/static/images/logo.jpg").;
-//             fdir = new File(System.getProperty("user.dir") + "\\"+filename+"\\" ).listFiles();
             fdir = new File(System.getProperty("user.dir") + "/"+filename+"/" ).listFiles();
-//
-//                fdir = new File(fileName ).listFiles();
             List<LocalPic> localPics = new ArrayList<LocalPic>();
             for(int i =0;i<fdir.length;i++){
                 LocalPic localPic = new LocalPic();

@@ -18,6 +18,7 @@ import com.handcraft.mapper.ImgInfoMapper;
 import com.handcraft.pojo.ImgInfo;
 import com.handcraft.pojo.LocalPic;
 import com.handcraft.service.LocalPicService;
+import com.handcraft.service.MHolidayService;
 import com.handcraft.util.ImgDownload;
 import com.handcraft.util.MsgCreate;
 import org.springframework.beans.factory.annotation.Autowired;

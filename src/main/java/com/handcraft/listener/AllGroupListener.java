@@ -1,5 +1,10 @@
 package com.handcraft.listener;
 
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.date.BetweenFormater;
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.forte.qqrobot.anno.Filter;
@@ -8,6 +13,7 @@ import com.forte.qqrobot.beans.cqcode.CQCode;
 import com.forte.qqrobot.beans.function.MostTypeFilter;
 import com.forte.qqrobot.beans.messages.msgget.GroupMsg;
 import com.forte.qqrobot.beans.messages.msgget.PrivateMsg;
+import com.forte.qqrobot.beans.types.CQCodeTypes;
 import com.forte.qqrobot.beans.types.MostType;
 import com.forte.qqrobot.sender.MsgSender;
 import com.forte.qqrobot.utils.CQCodeUtil;
@@ -18,7 +24,9 @@ import com.handcraft.features.repeat.RepeatTalk;
 import com.handcraft.mapper.ImgInfoMapper;
 import com.handcraft.pojo.ImgInfo;
 import com.handcraft.pojo.LocalPic;
+import com.handcraft.pojo.MHoliday;
 import com.handcraft.service.LocalPicService;
+import com.handcraft.service.MHolidayService;
 import com.handcraft.util.ImgDownload;
 import com.handcraft.util.MsgCreate;
 import com.handcraft.util.StringUtil;
@@ -29,7 +37,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -76,6 +87,8 @@ public class AllGroupListener {
     LocalPicService localPicService;
     @Value("${QQGroup.code}")
     String QQ_GROUP_CODE ;
+    @Autowired
+    MHolidayService mHolidayService;
 
     @Filter(value = {"今天的我"})
     public void todayMe(GroupMsg msg, MsgSender sender) {
@@ -97,6 +110,85 @@ public class AllGroupListener {
             sender.SENDER.sendGroupMsg(msg, msg.getMsg());
         }
     }
+
+    /**
+     *放假添加
+     */
+
+    @Filter(value = {"add.*"})
+    //hd YYYY-MM-DD qweqwr                   HH:MM:SS
+    public  void  addholiday(GroupMsg msg, MsgSender sender){
+        try {
+            String[] aa= msg.getMsg().split(" ");
+            String hotime = aa[1];
+            String honame = aa[2];
+            String qqcode = msg.getQQCode();
+            Date date = DateUtil.parse(hotime);
+            mHolidayService.add(qqcode,honame,date);
+            sender.SENDER.sendGroupMsg(msg,honame+"添加成功！");
+        } catch (Exception e) {
+            e.printStackTrace();
+            sender.SENDER.sendGroupMsg(msg,"添加失败！\n格式：add YYYY-MM-DD XX" +
+                    "\n例如：add 2022-01-01 元旦\n" +cqCodeUtil.getCQCode_Face("55")+
+                    "注意月份日期的0");
+        }
+
+    }
+    /**
+     *放假查询
+     */
+    @Filter(value = {"放假"})
+    //hd YYYY-MM-DD qweqwr                   HH:MM:SS
+    public  void  queryholiday(GroupMsg msg, MsgSender sender){
+        try {
+            List<MHoliday> querinfos = mHolidayService.selectOneHoliday(msg.getQQCode());
+            StringBuffer outmsg = new StringBuffer();
+            for(MHoliday sinfo : querinfos) {
+               String holidayname = sinfo.getHoliday();
+               Long a = DateUtil.between(new Date(),sinfo.getHolidayTime(), DateUnit.MS);
+               String formatBetween = DateUtil.formatBetween(a, BetweenFormater.Level.MINUTE);
+               outmsg.append("\n"+holidayname+"："+formatBetween);
+            }
+            String[] ra={"2","13","14","15","18","16","14","15","29","49","35","36","178","179","174","175",
+                    "177","187","200","201","202","203","204","212"
+            };
+           String raa = RandomUtil.randomEle(ra);
+           if(querinfos.size()==0){
+               sender.SENDER.sendGroupMsg(msg,
+                       cqCodeUtil.getCQCode_At(msg.getQQCode())+" "+
+                               cqCodeUtil.getCQCode_Face(raa)
+                               +"\n少年郎，暂时数据为空" +
+                               "\n添加指令：add" +
+                               "\n删除指令：del");
+           }else{
+               sender.SENDER.sendGroupMsg(msg,
+                       cqCodeUtil.getCQCode_At(msg.getQQCode())+" "+
+                               cqCodeUtil.getCQCode_Face(raa)
+                               +outmsg.toString());
+           }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            sender.SENDER.sendGroupMsg(msg,"放假失败");
+        }
+
+    }
+
+    @Filter(value = {"del.*"})
+    //hd YYYY-MM-DD qweqwr       hdel holiday     HH:MM:SS
+    public  void  delholiday(GroupMsg msg, MsgSender sender){
+        try {
+            String[] a =msg.getMsg().split(" ");
+            mHolidayService.delete(msg.getQQCode(),a[1]);
+            sender.SENDER.sendGroupMsg(msg,a[1]+"删除成功!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            sender.SENDER.sendGroupMsg(msg,"删除失败\n" +
+                    "格式：del XX");
+        }
+
+    }
+
 
     @Filter(at=true)
     public void qqAiTalk(GroupMsg msg, MsgSender sender) {
@@ -138,7 +230,7 @@ public class AllGroupListener {
                 }
         }
     }
-    @Filter(value = {"three","三次元","写真","兔子",".*兔","大大大","色图","3"})
+    @Filter(value = {"three","三次元","写真","兔子",".*兔","大大大","色图","3","色",".*熊.*"})
     public void localpicse(GroupMsg msg, MsgSender sender){
         try {
             LocalPic localPic=localPicService.selectonese();

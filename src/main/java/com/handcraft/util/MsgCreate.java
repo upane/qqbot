@@ -37,6 +37,8 @@ public class MsgCreate {
         sb.append("4.今天的我\n");
         sb.append("5.网易云、精神、wu\n");
         sb.append("6.每日读报、详情");
+        sb.append("7.放假");
+
         return sb.toString();
     }
 
