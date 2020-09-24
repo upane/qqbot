@@ -44,6 +44,10 @@ public interface CreateApiMsg {
     StringBuffer getEveryDayNews();
     StringBuffer getEveryDayNewsDeatil();
 
+    /**
+     * 韭菜
+     */
+    StringBuffer getFundInfos(String qqcode);
 
     String getTodayMe(String code, String name) ;
 }

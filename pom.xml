@@ -21,7 +21,7 @@
         <commons-io>2.6</commons-io>
         <mod-delay-task>1.0-1.11</mod-delay-task>
         <mybatis-spring-boot-starter>2.1.1</mybatis-spring-boot-starter>
-        <component-mirai-spring-boot-starter>1.14.0</component-mirai-spring-boot-starter>
+        <component-mirai-spring-boot-starter>1.15.0</component-mirai-spring-boot-starter>
         <jsoup>1.13.1</jsoup>
     </properties>
 
@@ -83,7 +83,11 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-
+        <!-- AOP -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
         <!-- component-mirai 快速启动器依赖 -->
         <dependency>
             <groupId>love.forte.simple-robot</groupId>

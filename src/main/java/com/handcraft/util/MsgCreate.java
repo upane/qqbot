@@ -2,11 +2,10 @@ package com.handcraft.util;
 
 import com.alibaba.fastjson.JSONObject;
 import com.forte.qqrobot.utils.CQCodeUtil;
-import com.handcraft.features.programmerCalendar.ProgrammerCalendar;
+import com.handcraft.features.Enum.ProgrammerCalendar;
 import okhttp3.*;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.regex.Matcher;
@@ -36,7 +35,7 @@ public class MsgCreate {
         sb.append("3.二次元、三次元、se\n");
         sb.append("4.今天的我\n");
         sb.append("5.网易云、精神、wu\n");
-        sb.append("6.每日读报、详情");
+        sb.append("6.每日读报、详情\n");
         sb.append("7.放假");
 
         return sb.toString();

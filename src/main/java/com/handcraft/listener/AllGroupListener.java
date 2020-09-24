@@ -17,6 +17,8 @@ import com.forte.qqrobot.beans.types.CQCodeTypes;
 import com.forte.qqrobot.beans.types.MostType;
 import com.forte.qqrobot.sender.MsgSender;
 import com.forte.qqrobot.utils.CQCodeUtil;
+import com.handcraft.anno.Check;
+import com.handcraft.features.Enum.FunEnum;
 import com.handcraft.features.api.CreateApiMsg;
 import com.handcraft.features.pixiv.PixivMsg;
 import com.handcraft.features.qqAi.QQAiTalk;
@@ -90,31 +92,19 @@ public class AllGroupListener {
     @Autowired
     MHolidayService mHolidayService;
 
+    @Check(type = FunEnum.FUNCTION_ABOUT_ME)
     @Filter(value = {"今天的我"})
     public void todayMe(GroupMsg msg, MsgSender sender) {
         String at = KQCodeUtils.INSTANCE.toCq("at", "qq=" + msg.getQQ());
-        String todayMe = createApiMsg.getTodayMe(msg.getQQCode(), sender.GETTER.getGroupMemberInfo(msg.getGroup(), msg.getQQCode()).getNickName());
+        String todayMe = createApiMsg.getTodayMe(msg.getQQCode(), sender.GETTER.getGroupMemberInfo(msg.getGroup(), msg.getQQCode()).getNickname());
         sender.SENDER.sendGroupMsg(msg, at + todayMe);
     }
 
-    @Filter
-    public void repeat(GroupMsg msg, MsgSender sender) {
-        String groupCode = msg.getGroupCode();
-        switch (groupCode) {
-            case "641057857":
-            case "925295392":
-                return;
-        }
-        boolean judge = repeatTalk.judge(msg);
-        if (judge) {
-            sender.SENDER.sendGroupMsg(msg, msg.getMsg());
-        }
-    }
 
     /**
      *放假添加
      */
-
+    @Check(type = FunEnum.FUNCTION_HOLIDAY)
     @Filter(value = {"add.*"})
     //hd YYYY-MM-DD qweqwr                   HH:MM:SS
     public  void  addholiday(GroupMsg msg, MsgSender sender){
@@ -137,6 +127,7 @@ public class AllGroupListener {
     /**
      *放假查询
      */
+    @Check(type = FunEnum.FUNCTION_HOLIDAY)
     @Filter(value = {"放假"})
     //hd YYYY-MM-DD qweqwr                   HH:MM:SS
     public  void  queryholiday(GroupMsg msg, MsgSender sender){
@@ -173,7 +164,7 @@ public class AllGroupListener {
         }
 
     }
-
+    @Check(type = FunEnum.FUNCTION_HOLIDAY)
     @Filter(value = {"del.*"})
     //hd YYYY-MM-DD qweqwr       hdel holiday     HH:MM:SS
     public  void  delholiday(GroupMsg msg, MsgSender sender){
@@ -189,7 +180,7 @@ public class AllGroupListener {
 
     }
 
-
+    @Check(type = FunEnum.FUNCTION_QQAITALK)
     @Filter(at=true)
     public void qqAiTalk(GroupMsg msg, MsgSender sender) {
         try {
@@ -215,6 +206,7 @@ public class AllGroupListener {
         sender.SENDER.sendGroupMsg(msg, msgCreate.getMenu());
     }
 
+    @Check(type = FunEnum.FUNCTION_SETU)
     @Filter(value = {"二次元","二刺猿","two","涩.*","来点色图","来份色图","来分色图","来张色图","来份涩图","来分涩图","涩图","2"})
     public void localpic(GroupMsg msg, MsgSender sender){
         try {
@@ -230,6 +222,8 @@ public class AllGroupListener {
                 }
         }
     }
+
+    @Check(type = FunEnum.FUNCTION_SETU)
     @Filter(value = {"three","三次元","写真","兔子",".*兔","大大大","色图","3","色",".*熊.*"})
     public void localpicse(GroupMsg msg, MsgSender sender){
         try {
@@ -247,6 +241,7 @@ public class AllGroupListener {
 
     }
 
+    @Check(type = FunEnum.FUNCTION_CALENDAR)
     @Filter(value = {"黄历"})
     public void programmerCalendar(GroupMsg msg, MsgSender sender) {
         String dayMsg = msgCreate.getProgrammerCalendar(1);
@@ -260,7 +255,7 @@ public class AllGroupListener {
         sender.SENDER.sendGroupMsg(msg, cqCode.toString());
     }
 
-
+    @Check(type = FunEnum.FUNCTION_SETU)
     @Filter(value = {"se"})
     public void sexImg(GroupMsg msg, MsgSender sender) {
         //接口key
@@ -291,8 +286,8 @@ public class AllGroupListener {
         }
     }
 
-
-    @Filter(value = {".我"})
+    @Check(type = FunEnum.FUNCTION_SWEET)
+    @Filter(value = {"[舔,甜,毒]"})
     public void sweet(GroupMsg msg, MsgSender sender) {
         String at = KQCodeUtils.INSTANCE.toCq("at", "qq=" + msg.getQQ());
         String sendMsg;
@@ -317,6 +312,7 @@ public class AllGroupListener {
     /**
      * 消息例子: 甜他 @XXX
      */
+    @Check(type = FunEnum.FUNCTION_SWEET)
     @Filter(value = {"[舔,甜,毒].*"})
     public void sweetAt(GroupMsg msg, MsgSender sender) {
         String msgStr = msg.getMsg();
@@ -346,6 +342,8 @@ public class AllGroupListener {
         }
         sender.SENDER.sendGroupMsg(msg, at + " " + sendMsg);
     }
+
+    @Check(type = FunEnum.FUNCTION_WANGYIYUN)
     @Filter(value = {"网抑云","网易云"})
     public void musiccomments(GroupMsg msg, MsgSender sender){
         try {
@@ -357,6 +355,8 @@ public class AllGroupListener {
         }
 
     }
+
+    @Check(type = FunEnum.FUNCTION_WANGYIYUN)
     @Filter(value = {"精神小伙","精神","小伙"})
     public void spiritGuy(GroupMsg msg, MsgSender sender){
         try {
@@ -367,6 +367,7 @@ public class AllGroupListener {
 
     }
 
+    @Check(type = FunEnum.FUNCTION_WANGYIYUN)
     @Filter(value = {"wu"})
     public void qinghua(GroupMsg msg, MsgSender sender){
         try {
@@ -377,7 +378,8 @@ public class AllGroupListener {
 
     }
 
-    @Filter(value = {"日报","简报","每日读报","每日新闻","新闻"})
+    @Check(type = FunEnum.FUNCTION_NEWS)
+    @Filter(value = {"日报","简报","每日读报","每日新闻","新闻","读报"})
     public void everyDayNews(GroupMsg msg, MsgSender sender){
         try {
             sender.SENDER.sendGroupMsg(msg,createApiMsg.getEveryDayNews().toString());
@@ -387,6 +389,7 @@ public class AllGroupListener {
 
     }
 
+    @Check(type = FunEnum.FUNCTION_NEWS)
     @Filter(value = {".*详情","新闻地址"})
     public void everyDayNewsDetail(GroupMsg msg, MsgSender sender){
         try {

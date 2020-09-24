@@ -1,4 +1,4 @@
-package com.handcraft.features.programmerCalendar;
+package com.handcraft.features.Enum;
 
 /**
  * activities的枚举

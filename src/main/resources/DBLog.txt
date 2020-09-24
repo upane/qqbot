@@ -79,3 +79,31 @@ CREATE TABLE `mholiday` (
   PRIMARY KEY (`UUID`),
   UNIQUE KEY `idx_holionly` (`qq_code`,`holiday`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='放假倒计时表';
+
+#2020/9/23
+DROP TABLE IF EXISTS `group_power`;
+CREATE TABLE `group_power` (
+  `UUID` varchar(150) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'id',
+  `qq_group` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'QQ群',
+  `fun_id` int(11) DEFAULT NULL COMMENT '功能id 群内某功能',
+  `status` int(11) DEFAULT NULL COMMENT '开启状态：0、关闭，1、开启',
+  PRIMARY KEY (`UUID`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='群功能开关表';
+
+DROP TABLE IF EXISTS `qq_power`;
+CREATE TABLE `qq_power` (
+  `UUID` varchar(150) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'id',
+  `qq` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'qq号--禁止/启用 某人使用某些功能',
+  `fun_id` int DEFAULT NULL COMMENT '功能id',
+  `status` int DEFAULT NULL COMMENT '权限：0：false、1：true',
+  PRIMARY KEY (`UUID`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='QQ号权限表';
+
+
+DROP TABLE IF EXISTS `fundinfo`;
+CREATE TABLE `fundinfo` (
+  `UUID` varchar(100) NOT NULL,
+  `qq_code` varchar(20) DEFAULT NULL,
+  `fund_code` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  PRIMARY KEY (`UUID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='基金表';

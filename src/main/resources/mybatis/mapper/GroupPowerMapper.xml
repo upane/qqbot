@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.handcraft.mapper.GroupPowerMapper">
+
+    <resultMap id="BaseResultMap" type="com.handcraft.pojo.GroupPower" >
+        <constructor >
+            <idArg column="UUID" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="qq_group" jdbcType="VARCHAR" javaType="java.lang.String"  />
+            <arg column="fun_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List" >
+    UUID,qq_group,status,fun_id
+     </sql>
+
+    <insert id="add"  parameterType="com.handcraft.pojo.GroupPower" >
+        insert into
+        group_power (UUID,qq_group,status,fun_id)
+        values
+        (#{UUID,jdbcType=VARCHAR},#{qqGroup,jdbcType=VARCHAR},
+         #{status,jdbcType=INTEGER},#{funId,jdbcType=INTEGER})
+
+    </insert>
+
+    <select id="selectByqqID" resultMap="BaseResultMap" parameterType="com.handcraft.pojo.GroupPower">
+        select
+        <include refid="Base_Column_List" />
+        from group_power
+        where qq_group=#{qqGroup,jdbcType=VARCHAR}
+        and fun_id=#{funId,jdbcType=INTEGER}
+    </select>
+
+
+    <update id="update" parameterType="com.handcraft.pojo.GroupPower">
+
+    update group_power
+    set  status=#{status,jdbcType=INTEGER},
+        fun_id=#{funId,jdbcType=INTEGER},qq_group=#{qqGroup,jdbcType=VARCHAR}
+    where UUID=#{UUID,jdbcType=VARCHAR}
+
+    </update>
+
+</mapper>

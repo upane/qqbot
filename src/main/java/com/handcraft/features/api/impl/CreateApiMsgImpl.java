@@ -4,21 +4,31 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.forte.qqrobot.utils.CQCodeUtil;
 import com.handcraft.features.api.CreateApiMsg;
+import com.handcraft.pojo.FundInfo;
+import com.handcraft.service.FundInfoService;
 import com.handcraft.util.MsgCreate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class CreateApiMsgImpl implements CreateApiMsg {
     @Resource
     MsgCreate msgCreate;
+    @Autowired
+    FundInfoService fundInfoService;
+
     private String aipUrl = "https://s.nmsl8.club/getloveword?type=";
     private String aipUrl2 = "https://api.66mz8.com/api/social.php?format=json";
     private String aipUrlwuwu = "https://api.66mz8.com/api/sweet.php?format=json";
     private String aipUrlmusic = "https://api.66mz8.com/api/music.163.php?format=json";
-
     private String aipEveryDayNews = "https://news.topurl.cn/api";
+
+    private String aipfundinfo = "https://api.doctorxiong.club/v1/fund?code=";
+    private String aipfundboard = "https://api.doctorxiong.club/v1/stock/board";
+
     private CQCodeUtil cqCodeUtil = CQCodeUtil.build();
 
     @Override
@@ -71,6 +81,39 @@ public class CreateApiMsgImpl implements CreateApiMsg {
         }
         return outputstr;
 
+    }
+
+    @Override
+    public StringBuffer getFundInfos(String qqcode) {
+        StringBuffer outputstr =new StringBuffer();
+       List<FundInfo> fundInfos= fundInfoService.selectFunds(qqcode);
+       if(fundInfos==null){
+           outputstr.append(" ");
+       }else {
+           String getinfo="";
+           for(FundInfo fundInfo:fundInfos){
+               fundInfo.getFundCode();
+               getinfo+=fundInfo.getFundCode()+",";
+           }
+           String sourString= msgCreate.okHttpGetMethod(aipfundinfo+getinfo);
+           JSONObject obj = JSONObject.parseObject(sourString);
+           JSONArray araynews = obj.getJSONArray("data");
+           for (int i =0;i<araynews.size();i++){
+               JSONObject acc =araynews.getJSONObject(i);
+               outputstr.append("\n"+acc.getString("name"));
+               outputstr.append("("+acc.getString("code")+")：");
+               outputstr.append(acc.getString("expectGrowth"));
+           }
+       }
+        String dapanString= msgCreate.okHttpGetMethod(aipfundboard);
+        JSONObject obj2 = JSONObject.parseObject(dapanString);
+        JSONArray araynews2 = obj2.getJSONArray("data");
+        JSONObject acc =araynews2.getJSONObject(0);
+        outputstr.append("\n"+acc.getString("name")+"  ");
+        outputstr.append(acc.getString("price")+"  ");
+        outputstr.append(acc.getString("changePercent")+"%");
+
+        return outputstr;
     }
 
     @Override

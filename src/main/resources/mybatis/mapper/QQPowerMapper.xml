@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.handcraft.mapper.QQPowerMapper">
+
+    <resultMap id="BaseResultMap" type="com.handcraft.pojo.QQPower" >
+        <constructor >
+            <idArg column="UUID" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="fun_id" jdbcType="VARCHAR" javaType="java.lang.Integer" />
+            <arg column="qq" jdbcType="VARCHAR" javaType="java.lang.String"  />
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List" >
+    UUID,qq,status,fun_id
+     </sql>
+
+    <insert id="add"  parameterType="com.handcraft.pojo.QQPower" >
+        insert into
+        qq_power   (<include refid="Base_Column_List" />)
+        values
+        (#{UUID,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+        #{funId,jdbcType=INTEGER},#{qq,jdbcType=TIMESTAMP})
+
+    </insert>
+
+    <select id="selectByQQandStatus" parameterType="com.handcraft.pojo.QQPower"  resultType="java.lang.Integer">
+        select count(*)
+        from qq_power
+        where qq=#{qq,jdbcType=VARCHAR}
+        and status=#{status,jdbcType=INTEGER}
+    </select>
+
+
+    <update id="update" parameterType="com.handcraft.pojo.QQPower">
+
+    update qq_power
+    set UUID=#{UUID,jdbcType=VARCHAR}, status=#{status,jdbcType=INTEGER},
+        fun_id=#{funId,jdbcType=INTEGER},qq=#{qq,jdbcType=TIMESTAMP}
+    where UUID=#{UUID,jdbcType=VARCHAR}
+
+    </update>
+</mapper>

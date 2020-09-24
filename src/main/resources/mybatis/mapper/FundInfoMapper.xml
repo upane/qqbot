@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.handcraft.mapper.FundInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.handcraft.pojo.FundInfo" >
+        <constructor >
+            <idArg column="UUID" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="qq_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="fund_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List" >
+    UUID,qq_code,fund_code
+     </sql>
+
+    <insert id="add"  parameterType="com.handcraft.pojo.FundInfo" >
+        insert into
+        fundinfo   (UUID,qq_code,fund_code)
+        values
+        (#{UUID,jdbcType=VARCHAR}, #{qqCode,jdbcType=VARCHAR},
+        #{fundCode,jdbcType=VARCHAR})
+
+    </insert>
+
+    <select id="selectByQQcode" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+     from fundinfo
+     where qq_code=#{qqCode,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="delete" parameterType="com.handcraft.pojo.FundInfo">
+
+    delete from fundinfo
+    where qq_code=#{qqCode,jdbcType=VARCHAR}
+    and fund_code=#{fundCode,jdbcType=VARCHAR}
+    </delete>
+
+</mapper>
