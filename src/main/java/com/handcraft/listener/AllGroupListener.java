@@ -83,8 +83,6 @@ public class AllGroupListener {
     ImgInfoMapper imgInfoMapper;
     @Resource
     QQAiTalk qqAiTalk;
-    @Resource
-    RepeatTalk repeatTalk;
     @Autowired
     LocalPicService localPicService;
     @Value("${QQGroup.code}")

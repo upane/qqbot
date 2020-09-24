@@ -52,6 +52,8 @@ public class AllGroupTwoListener {
     FundInfoService fundInfoService;
     @Resource
     CreateApiMsg createApiMsg;
+    @Resource
+    RepeatTalk repeatTalk;
 
     @Check(type = FunEnum.FUNCTION_FUNDS)
     @Filter(value = {"基金"})
@@ -93,5 +95,12 @@ public class AllGroupTwoListener {
             sender.SENDER.sendGroupMsg(msg,"退订失败！");
         }
     }
-
+    @Filter
+    public void repeat(GroupMsg msg, MsgSender sender) {
+        String groupCode = msg.getGroupCode();
+        boolean judge = repeatTalk.judge(msg);
+        if (judge) {
+            sender.SENDER.sendGroupMsg(msg, msg.getMsg());
+        }
+    }
 }
