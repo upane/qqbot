@@ -1,6 +1,5 @@
 package com.handcraft.listener;
 
-import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.BetweenFormater;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
@@ -10,11 +9,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.forte.qqrobot.anno.Filter;
 import com.forte.qqrobot.anno.template.OnGroup;
 import com.forte.qqrobot.beans.cqcode.CQCode;
-import com.forte.qqrobot.beans.function.MostTypeFilter;
 import com.forte.qqrobot.beans.messages.msgget.GroupMsg;
-import com.forte.qqrobot.beans.messages.msgget.PrivateMsg;
-import com.forte.qqrobot.beans.types.CQCodeTypes;
-import com.forte.qqrobot.beans.types.MostType;
 import com.forte.qqrobot.sender.MsgSender;
 import com.forte.qqrobot.utils.CQCodeUtil;
 import com.handcraft.anno.Check;
@@ -22,7 +17,6 @@ import com.handcraft.features.Enum.FunEnum;
 import com.handcraft.features.api.CreateApiMsg;
 import com.handcraft.features.pixiv.PixivMsg;
 import com.handcraft.features.qqAi.QQAiTalk;
-import com.handcraft.features.repeat.RepeatTalk;
 import com.handcraft.mapper.ImgInfoMapper;
 import com.handcraft.pojo.ImgInfo;
 import com.handcraft.pojo.LocalPic;
@@ -36,32 +30,17 @@ import com.simplerobot.modules.utils.KQCodeUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 /**
  * 公用群组监听器
  * 这里是公用监听器 对所有群开放
- *
- * @author Heilant Gong
- * <p>
- * {@link OnGroup} 此类为监听所有监听群消息的方法
- *
- * <p>方法作用说明
- * {@link this#repeat(GroupMsg, MsgSender)} 复读机
- * {@link this#qqAiTalk(GroupMsg, MsgSender)} 闲聊
- * {@link this#menu(GroupMsg, MsgSender)} 机器人菜单
- * {@link this#programmerCalendar(GroupMsg, MsgSender)} 主动获取老黄历
- * {@link this#emj(GroupMsg, MsgSender)} 发送一个emj
- * {@link this#sexImg(GroupMsg, MsgSender)} 获取一张涩图
- * {@link this#sweet(GroupMsg, MsgSender)} 舔/甜/毒狗模式
  */
 @Component
 @OnGroup
@@ -204,6 +183,7 @@ public class AllGroupListener {
         sender.SENDER.sendGroupMsg(msg, msgCreate.getMenu());
     }
 
+    @Async(value="imageThreadPool")
     @Check(type = FunEnum.FUNCTION_SETU)
     @Filter(value = {"二次元","二刺猿","two","涩.*","来点色图","来份色图","来分色图","来张色图","来份涩图","来分涩图","涩图","2"})
     public void localpic(GroupMsg msg, MsgSender sender){
@@ -220,7 +200,7 @@ public class AllGroupListener {
                 }
         }
     }
-
+    @Async(value="image2ThreadPool")
     @Check(type = FunEnum.FUNCTION_SETU)
     @Filter(value = {"three","三次元","写真","兔子",".*兔","大大大","色图","3","色",".*熊.*"})
     public void localpicse(GroupMsg msg, MsgSender sender){

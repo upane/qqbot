@@ -21,6 +21,32 @@ import java.util.regex.Pattern;
 public class MsgCreate {
     private CQCodeUtil cqCodeUtil = CQCodeUtil.build();
 
+    String azzc="    {\n" +
+            "        \"app\": \"com.tencent.autoreply\", \n" +
+            "            \"desc\": \"\",\n" +
+            "            \"view\": \"autoreply\",\n" +
+            "            \"ver\": \"0.0.0.1\",\n" +
+            "            \"prompt\": \"[动画表情]\", \n" +
+            "            \"meta\": {\n" +
+            "        \"metadata\": {\n" +
+            "            \"buttons\": [{\n" +
+            "                \"action\": \"notify\",\n" +
+            "                        \"action_data\": \"周末我穿女装给你们爽爽\", \n" +
+            "                        \"name\": \"点我\", //按钮名\n" +
+            "                        \"slot\": 1\n" +
+            "            }\n" +
+            "            ],\n" +
+            "            \"title\": \"点击蓝色字体有惊喜\", \n" +
+            "                    \"token\": \"LAcV49xqyE57S17B8ZT6FU7odBveNMYJzux288tBD3c=\",\n" +
+            "                    \"type\": \"guest\"\n" +
+            "        }\n" +
+            "    },\n" +
+            "        \"config\": {\n" +
+            "        \"forward\": 1,\n" +
+            "                \"showSender\": 1\n" +
+            "    }\n" +
+            "    } ";
+
 
     /**
      * 生成菜单

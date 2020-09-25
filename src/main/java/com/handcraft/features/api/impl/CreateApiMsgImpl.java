@@ -113,6 +113,10 @@ public class CreateApiMsgImpl implements CreateApiMsg {
         outputstr.append(acc.getString("price")+"  ");
         outputstr.append(acc.getString("changePercent")+"%");
 
+        JSONObject acc6 =araynews2.getJSONObject(5);
+        outputstr.append("\n"+acc6.getString("name")+"  ");
+        outputstr.append(acc6.getString("price")+"  ");
+        outputstr.append(acc6.getString("changePercent")+"%");
         return outputstr;
     }
 

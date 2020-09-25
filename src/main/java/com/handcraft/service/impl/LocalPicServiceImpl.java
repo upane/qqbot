@@ -77,9 +77,7 @@ public class LocalPicServiceImpl implements LocalPicService {
             for(int i =0 ;i<azz.length;i++){
                 output.append(azz[i]+"</br>");
             }
-            return "SHIT SHIT SHIT 数据读取失败ZZZZZZZZ</br>"+output.toString()
-                    +System.getProperty("/" +
-                    "see"+"/") ;
+            return "SHIT SHIT SHIT 数据读取失败ZZZZZZZZ</br>" ;
         }
     }
 
