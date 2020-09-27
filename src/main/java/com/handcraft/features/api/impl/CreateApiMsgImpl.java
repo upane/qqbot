@@ -1,5 +1,6 @@
 package com.handcraft.features.api.impl;
 
+import cn.hutool.core.text.StrBuilder;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.forte.qqrobot.utils.CQCodeUtil;
@@ -29,8 +30,9 @@ public class CreateApiMsgImpl implements CreateApiMsg {
     private String aipfundinfo = "https://api.doctorxiong.club/v1/fund?code=";
     private String aipfundboard = "https://api.doctorxiong.club/v1/stock/board";
 
-    private CQCodeUtil cqCodeUtil = CQCodeUtil.build();
+    private String aipnewBotAi = "https://api.ownthink.com/bot?spoken=";
 
+    private CQCodeUtil cqCodeUtil = CQCodeUtil.build();
     @Override
     public String getmusic() {
         return formatmusic(msgCreate.okHttpGetMethod(aipUrlmusic));
@@ -142,6 +144,18 @@ public class CreateApiMsgImpl implements CreateApiMsg {
         stringBuffer.append("code=").append(code);
         stringBuffer.append("&name=").append(name);
         return msgCreate.okHttpGetMethod(stringBuffer.toString());
+    }
+
+    @Override
+    public StringBuffer getnewBotAI(String talk) {
+        String sourString= msgCreate.okHttpGetMethod(aipnewBotAi+talk);
+        JSONObject obj = JSONObject.parseObject(sourString);
+        JSONObject content = obj.getJSONObject("data");
+        JSONObject info = content.getJSONObject("info");
+        String text = info.getString("text");
+        StringBuffer res =new StringBuffer();
+        res.append(text);
+        return res;
     }
 
     private static String format(String Json) {

@@ -156,20 +156,21 @@ public class AllGroupListener {
         }
 
     }
-
+//    @Async(value="image2ThreadPool")
     @Check(type = FunEnum.FUNCTION_QQAITALK)
     @Filter(at=true)
     public void qqAiTalk(GroupMsg msg, MsgSender sender) {
         try {
-            String talk = qqAiTalk.getTalk(msg.getMsg(), msg.getQQCode());
-            JSONObject jsonObject = JSON.parseObject(talk);
-            String answer = jsonObject.getJSONObject("data").getString("answer");
-            if (null == answer) {
-                answer = "听不懂你在说什么呢";
-            }
-            sender.SENDER.sendGroupMsg(msg, answer);
+//            String talk = qqAiTalk.getTalk(msg.getMsg(), msg.getQQCode());
+//            JSONObject jsonObject = JSON.parseObject(talk);
+//            String answer = jsonObject.getJSONObject("data").getString("answer");
+//            if (null == answer) {
+//                answer = "听不懂你在说什么呢";
+             StringBuffer answer =   createApiMsg.getnewBotAI(msg.getMsg());
+//            }
+            sender.SENDER.sendGroupMsg(msg, answer.toString());
         }catch (IllegalArgumentException e){
-            sender.SENDER.sendGroupMsg(msg,"辣鸡腾讯接口");
+            sender.SENDER.sendGroupMsg(msg,"辣鸡接口");
             e.printStackTrace();
         }catch (Exception e){
             sender.SENDER.sendGroupMsg(msg,"卧槽，未知错误");

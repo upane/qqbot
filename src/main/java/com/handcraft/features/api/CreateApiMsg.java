@@ -1,5 +1,6 @@
 package com.handcraft.features.api;
 
+import cn.hutool.core.text.StrBuilder;
 import com.alibaba.fastjson.JSONObject;
 import com.handcraft.util.MsgCreate;
 import org.springframework.stereotype.Component;
@@ -48,6 +49,11 @@ public interface CreateApiMsg {
      * 韭菜
      */
     StringBuffer getFundInfos(String qqcode);
+
+    /**
+     * 思知机器人
+     */
+    StringBuffer getnewBotAI(String talk);
 
     String getTodayMe(String code, String name) ;
 }

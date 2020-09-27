@@ -67,23 +67,19 @@ public class AllPrivateListener {
     @Filter()
     public void qqAiTalk(PrivateMsg msg, MsgSender sender) {
         try {
-            String msgStr = msg.getMsg();
-//        //移除开头的空格
-//        msgStr = msgStr.substring(1);
-            System.out.println(msgStr);
-            String talk = qqAiTalk.getTalk(msgStr, msg.getQQCode());
-            JSONObject jsonObject = JSON.parseObject(talk);
-            String answer = jsonObject.getJSONObject("data").getString("answer");
-            if (null == answer) {
-                answer = "听不懂你在说什么呢";
-            }
-            sender.SENDER.sendPrivateMsg(msg, answer);
-
+//            String talk = qqAiTalk.getTalk(msg.getMsg(), msg.getQQCode());
+//            JSONObject jsonObject = JSON.parseObject(talk);
+//            String answer = jsonObject.getJSONObject("data").getString("answer");
+//            if (null == answer) {
+//                answer = "听不懂你在说什么呢";
+            StringBuffer answer =   createApiMsg.getnewBotAI(msg.getMsg());
+//            }
+            sender.SENDER.sendPrivateMsg(msg, answer.toString());
         }catch (IllegalArgumentException e){
-            sender.SENDER.sendPrivateMsg(msg,"辣鸡腾讯接口");
+            sender.SENDER.sendPrivateMsg(msg,"辣鸡接口");
             e.printStackTrace();
         }catch (Exception e){
-            sender.SENDER.sendPrivateMsg(msg,"未知错误");
+            sender.SENDER.sendPrivateMsg(msg,"卧槽，未知错误");
             e.printStackTrace();
         }
 
