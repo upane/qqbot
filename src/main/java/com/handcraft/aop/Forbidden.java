@@ -7,7 +7,6 @@ import com.forte.qqrobot.sender.MsgSender;
 import com.forte.qqrobot.utils.CQCodeUtil;
 import com.handcraft.anno.Ban;
 import com.handcraft.features.Enum.FunEnum;
-import com.handcraft.mapper.GroupPowerMapper;
 import com.handcraft.pojo.GroupPower;
 import com.handcraft.pojo.QQPower;
 import com.handcraft.service.GroupPowerService;
@@ -19,8 +18,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * Ban人AOP

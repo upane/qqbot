@@ -5,21 +5,22 @@
     <resultMap id="BaseResultMap" type="com.handcraft.pojo.QQPower" >
         <constructor >
             <idArg column="UUID" jdbcType="VARCHAR" javaType="java.lang.String" />
-            <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer" />
-            <arg column="fun_id" jdbcType="VARCHAR" javaType="java.lang.Integer" />
             <arg column="qq" jdbcType="VARCHAR" javaType="java.lang.String"  />
+            <arg column="fun_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+
         </constructor>
     </resultMap>
     <sql id="Base_Column_List" >
-    UUID,qq,status,fun_id
+    UUID,qq,fun_id,status
      </sql>
 
     <insert id="add"  parameterType="com.handcraft.pojo.QQPower" >
         insert into
         qq_power   (<include refid="Base_Column_List" />)
         values
-        (#{UUID,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
-        #{funId,jdbcType=INTEGER},#{qq,jdbcType=TIMESTAMP})
+        (#{UUID,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR},
+        #{funId,jdbcType=INTEGER},#{status,jdbcType=INTEGER})
 
     </insert>
 
@@ -35,7 +36,7 @@
 
     update qq_power
     set UUID=#{UUID,jdbcType=VARCHAR}, status=#{status,jdbcType=INTEGER},
-        fun_id=#{funId,jdbcType=INTEGER},qq=#{qq,jdbcType=TIMESTAMP}
+        fun_id=#{funId,jdbcType=INTEGER},qq=#{qq,jdbcType=VARCHAR}
     where UUID=#{UUID,jdbcType=VARCHAR}
 
     </update>
