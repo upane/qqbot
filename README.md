@@ -19,8 +19,6 @@
 
 - 开启关闭指令
 
--  感谢[HeilantG](https://github.com/HeilantG/) 
-
 # 三克油 thanks
 
 主要参考了[HeilantG](https://github.com/HeilantG/) 的
@@ -53,7 +51,3 @@ Mirai详情请见[Mirai](https://github.com/mamoe/mirai)
 加点盐（/滑稽）
 
 - 2020.9.24 现在jar包部署在docker，数据库也在docker................  
-
-
-
--  感谢[HeilantG](https://github.com/HeilantG/) 
