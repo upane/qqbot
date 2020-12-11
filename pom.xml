@@ -19,7 +19,7 @@
         <java.version>1.8</java.version>
         <okhttp>4.5.0</okhttp>
         <commons-io>2.6</commons-io>
-        <mod-delay-task>1.0-1.11</mod-delay-task>
+        <mod-delay-task>1.1-1.12</mod-delay-task>
         <mybatis-spring-boot-starter>2.1.1</mybatis-spring-boot-starter>
         <component-mirai-spring-boot-starter>1.15.0</component-mirai-spring-boot-starter>
         <jsoup>1.13.1</jsoup>

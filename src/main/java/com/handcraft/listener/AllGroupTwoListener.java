@@ -30,6 +30,7 @@ import com.handcraft.util.MsgCreate;
 import com.handcraft.util.StringUtil;
 import com.simplerobot.modules.utils.KQCodeUtils;
 import lombok.extern.log4j.Log4j2;
+import net.mamoe.mirai.qqandroid.network.protocol.data.proto.MultiMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -66,8 +67,12 @@ public class AllGroupTwoListener {
     @Check(type = FunEnum.FUNCTION_FUNDS)
     @Filter(value = {"韭菜"})
     public void funinfo(GroupMsg msg, MsgSender sender) {
-      StringBuffer str =  createApiMsg.getFundInfos(msg.getQQCode());
-      sender.SENDER.sendGroupMsg(msg,cqCodeUtil.getCQCode_At(msg.getQQCode())+" "+str);
+        try {
+            StringBuffer str = createApiMsg.getFundInfos(msg.getQQCode());
+            sender.SENDER.sendGroupMsg(msg, cqCodeUtil.getCQCode_At(msg.getQQCode()) + " " + str);
+        }catch (Exception e){
+            sender.SENDER.sendGroupMsg(msg, "error");
+        }
     }
 
     @Check(type = FunEnum.FUNCTION_FUNDS)
