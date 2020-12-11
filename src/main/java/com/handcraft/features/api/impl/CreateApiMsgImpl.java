@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class CreateApiMsgImpl implements CreateApiMsg {
@@ -26,9 +28,10 @@ public class CreateApiMsgImpl implements CreateApiMsg {
     private String aipUrlwuwu = "https://api.66mz8.com/api/sweet.php?format=json";
     private String aipUrlmusic = "https://api.66mz8.com/api/music.163.php?format=json";
     private String aipEveryDayNews = "https://news.topurl.cn/api";
-
-    private String aipfundinfo = "https://api.doctorxiong.club/v1/fund?code=";
-    private String aipfundboard = "https://api.doctorxiong.club/v1/stock/board";
+  //  http://fundgz.1234567.com.cn/js/001186.js  接口实例
+    //http://hq.sinajs.cn/list=s_sh000001
+    private String aipfundinfo = "http://fundgz.1234567.com.cn/js/";
+    private String aipfundboard = "http://hq.sinajs.cn/list=";
 
     private String aipnewBotAi = "https://api.ownthink.com/bot?spoken=";
 
@@ -92,33 +95,26 @@ public class CreateApiMsgImpl implements CreateApiMsg {
        if(fundInfos==null){
            outputstr.append(" ");
        }else {
-           String getinfo="";
            for(FundInfo fundInfo:fundInfos){
                fundInfo.getFundCode();
-               getinfo+=fundInfo.getFundCode()+",";
-           }
-           String sourString= msgCreate.okHttpGetMethod(aipfundinfo+getinfo);
-           JSONObject obj = JSONObject.parseObject(sourString);
-           JSONArray araynews = obj.getJSONArray("data");
-           for (int i =0;i<araynews.size();i++){
-               JSONObject acc =araynews.getJSONObject(i);
-               outputstr.append("\n"+acc.getString("name"));
-               outputstr.append("("+acc.getString("code")+")：");
-               outputstr.append(acc.getString("expectGrowth"));
+
+               String sourString= msgCreate.okHttpGetMethod(aipfundinfo+fundInfo.getFundCode()+".js");
+
+               String  sourString2 = sourString.split("\\(")[1];
+               JSONObject obj = JSONObject.parseObject(sourString2.split("\\)")[0]);
+               String name = obj.getString("name");
+               String growth = obj.getString("gszzl");
+               String foundCode = obj.getString("fundcode");
+
+               outputstr.append("\n"+name);
+               outputstr.append("("+foundCode+")：");
+               outputstr.append(growth+"%");
            }
        }
-        String dapanString= msgCreate.okHttpGetMethod(aipfundboard);
-        JSONObject obj2 = JSONObject.parseObject(dapanString);
-        JSONArray araynews2 = obj2.getJSONArray("data");
-        JSONObject acc =araynews2.getJSONObject(0);
-        outputstr.append("\n"+acc.getString("name")+"  ");
-        outputstr.append(acc.getString("price")+"  ");
-        outputstr.append(acc.getString("changePercent")+"%");
-
-        JSONObject acc6 =araynews2.getJSONObject(5);
-        outputstr.append("\n"+acc6.getString("name")+"  ");
-        outputstr.append(acc6.getString("price")+"  ");
-        outputstr.append(acc6.getString("changePercent")+"%");
+        String dapanString= msgCreate.okHttpGetMethod(aipfundboard+"s_sh000001");
+      String dapanString2 = dapanString.split("\"")[1];
+        outputstr.append("\n"+dapanString2.split(",")[0]+"  "+
+                dapanString2.split(",")[1]+"  "+dapanString2.split(",")[3]+"%");
         return outputstr;
     }
 
