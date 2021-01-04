@@ -22,7 +22,7 @@
 -  com.handcraft.features.qqAi.QQAiTalk  有appId、appKey能闲聊AI
  - com.handcraft.features.pixiv.PixivMsg  加TG机器人获取token才能涩图        获取网址都在两个类中
  
- - 推荐使用服务器本地图片加载图片~速度快~芜湖起飞 
+ - 推荐使用服务器本地图片加载图片，速度快，芜湖起飞 
  
 -  基本上指令package com.handcraft.listener;  如下  
 @Filter(value = {"see"})的注解 ，如这条就是发see
