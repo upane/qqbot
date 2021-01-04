@@ -100,8 +100,8 @@ public class CreateApiMsgImpl implements CreateApiMsg {
 
                String sourString= msgCreate.okHttpGetMethod(aipfundinfo+fundInfo.getFundCode()+".js");
 
-               String  sourString2 = sourString.split("\\(")[1];
-               JSONObject obj = JSONObject.parseObject(sourString2.split("\\)")[0]);
+               String  sourString2 = sourString.split("gz\\(")[1];
+               JSONObject obj = JSONObject.parseObject(sourString2.split("\\);")[0]);
                String name = obj.getString("name");
                String growth = obj.getString("gszzl");
                String foundCode = obj.getString("fundcode");

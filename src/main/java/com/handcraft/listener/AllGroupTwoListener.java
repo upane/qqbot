@@ -71,6 +71,7 @@ public class AllGroupTwoListener {
             StringBuffer str = createApiMsg.getFundInfos(msg.getQQCode());
             sender.SENDER.sendGroupMsg(msg, cqCodeUtil.getCQCode_At(msg.getQQCode()) + " " + str);
         }catch (Exception e){
+            e.printStackTrace();
             sender.SENDER.sendGroupMsg(msg, "error");
         }
     }
