@@ -63,29 +63,27 @@ public class jocker {
             String followTime =info.getString("CreateTime");
             String imgurl =info.getString("Url");
             String[]  name = imgurl.split("/");
-            String name2 =name[name.length-1].split(".")[0];
+            String name2 =name[name.length-1];
 
                 try {
-                    imgDownload.download(imgurl, null, name2);
+                    imgDownload.download(imgurl, "C:\\img\\", name2);
 //                    imgInfoMapper.addImg(imgInfo);
                 } catch (Exception ignored) {
                 }
-
-
         }
-        BotSender sender = botManager.defaultBot().getSender();
-        String dayMsg = msgCreate.getDayMsg();
+//        BotSender sender = botManager.defaultBot().getSender();
+//        String dayMsg = msgCreate.getDayMsg();
+////        sender.SENDER.sendGroupMsg(QQ_GROUP_CODE, dayMsg);
+//        sender.SENDER.sendGroupMsg(QQ_GROUP_CODE, createApiMsg.getEveryDayNews().toString());
+    }
+
+//    @Scheduled(cron = " 0 10 18 * * ? ")
+//    public void everyLOLday(){
+//
+//        BotSender sender = botManager.defaultBot().getSender();
+//        String dayMsg = msgCreate.getDayMsg();
 //        sender.SENDER.sendGroupMsg(QQ_GROUP_CODE, dayMsg);
-        sender.SENDER.sendGroupMsg(QQ_GROUP_CODE, createApiMsg.getEveryDayNews().toString());
-    }
-
-    @Scheduled(cron = " 0 10 18 * * ? ")
-    public void everyLOLday(){
-
-        BotSender sender = botManager.defaultBot().getSender();
-        String dayMsg = msgCreate.getDayMsg();
-        sender.SENDER.sendGroupMsg(QQ_GROUP_CODE, dayMsg);
-    }
+//    }
 
 
 

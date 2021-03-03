@@ -45,9 +45,9 @@ public class ImgDownload {
             //打开网络输入流
             DataInputStream dis = new DataInputStream(inputStream);
             //获取图片格式
-            imgFormat = imgUrl.substring(StringUtils.ordinalIndexOf(imgUrl, ".", 3));
+//            imgFormat = imgUrl.substring(StringUtils.ordinalIndexOf(imgUrl, ".", 3));
             //建立一个新的文件
-            localUrl = path + uuid + imgFormat;
+            localUrl = path + uuid;
             FileOutputStream fos = new FileOutputStream(new File(localUrl));
             byte[] buffer1 = new byte[1024];
             int length;
