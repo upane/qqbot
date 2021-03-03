@@ -203,7 +203,7 @@ public class AllGroupListener {
     }
     @Async(value="image2ThreadPool")
     @Check(type = FunEnum.FUNCTION_SETU)
-    @Filter(value = {"three","三次元","写真","兔子",".*兔","大大大","色图","3","色",".*熊.*"})
+    @Filter(value = {"three","三次元","写真","兔子",".*兔","大大大","色图","3","色"})
     public void localpicse(GroupMsg msg, MsgSender sender){
         try {
             LocalPic localPic=localPicService.selectonese();
@@ -266,7 +266,7 @@ public class AllGroupListener {
     }
 
     @Check(type = FunEnum.FUNCTION_SWEET)
-    @Filter(value = {"[舔,甜,毒]"})
+    @Filter(value = {"[舔,甜]"})
     public void sweet(GroupMsg msg, MsgSender sender) {
         String at = KQCodeUtils.INSTANCE.toCq("at", "qq=" + msg.getQQ());
         String sendMsg;
@@ -277,9 +277,6 @@ public class AllGroupListener {
                 break;
             case "甜":
                 sendMsg = createApiMsg.getSweet();
-                break;
-            case "毒":
-                sendMsg = createApiMsg.getPoisonousChickenSoup();
                 break;
             default:
                 return;
