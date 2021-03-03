@@ -25,14 +25,10 @@ public class LocalPicServiceImpl implements LocalPicService {
     LocalPicMapper localPicMapper;
 
     @Override
-    public LocalPic selectone() {
-       return  localPicMapper.queryone();
+    public LocalPic queryOneByKind(String kind) {
+       return  localPicMapper.queryOneByKind(kind);
     }
 
-    @Override
-    public LocalPic selectonese() {
-        return  localPicMapper.queryonese();
-    }
 
     @Override
     public void delete(LocalPic localPic) {
@@ -41,7 +37,7 @@ public class LocalPicServiceImpl implements LocalPicService {
 
     @Override
     public String batchadd(String filename,Integer pictype) {
-        byte a;
+        Integer a;
         File[] fdir ;
         try{
             fdir = new File(System.getProperty("user.dir") + "/"+filename+"/" ).listFiles();

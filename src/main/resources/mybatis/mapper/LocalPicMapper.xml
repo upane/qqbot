@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> <mapper namespace="com.handcraft.mapper.LocalPicMapper">
 
-    <resultMap id="BaseResultMap" type="com.handcraft.pojo.LocalPic" >
-        <constructor >
-            <idArg column="UUID" jdbcType="VARCHAR" javaType="java.lang.String" />
-            <arg column="img_path" jdbcType="VARCHAR" javaType="java.lang.String" />
-            <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-            <arg column="pic_type" jdbcType="TINYINT" javaType="java.lang.Byte"  />
-        </constructor>
+    <resultMap id="BaseResultMap" type="com.handcraft.pojo.LocalPic">
+        <id column="UUID" jdbcType="VARCHAR" property="UUID" />
+        <result column="img_path" jdbcType="VARCHAR" property="imgPath" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="pic_type" jdbcType="INTEGER" property="picType" />
+        <result column="pic_time" jdbcType="TIMESTAMP" property="picTime" />
     </resultMap>
-
+    <sql id="Base_Column_List">
+    UUID, img_path,create_time,pic_type,pic_time
+  </sql>
     <insert id="batchadd"  parameterType="com.handcraft.pojo.LocalPic" >
         insert into localpic(UUID, img_path,create_time,pic_type)
         values
@@ -18,18 +19,18 @@
         </foreach>
     </insert>
 
-    <select id="queryone" resultMap="BaseResultMap">
-    select UUID, img_path,create_time,pic_type
-     from localpic
-     where pic_type="1"
-    order by create_time asc
-    limit 1
-    </select>
+    <insert id="insert" keyColumn="UUID" keyProperty="uuid" parameterType="com.handcraft.pojo.LocalPic">
+    insert into localpic (UUID,img_path, create_time, pic_type,
+      pic_time)
+    values (#{UUID,jdbcType=VARCHAR},#{imgPath,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{picType,jdbcType=INTEGER},
+      #{picTime,jdbcType=TIMESTAMP})
+  </insert>
 
-    <select id="queryonese" resultMap="BaseResultMap">
+
+    <select id="queryOneByKind" resultMap="BaseResultMap" >
     select UUID, img_path,create_time,pic_type
      from localpic
-     where pic_type="2"
+     where pic_type=#{picType,jdbcType=VARCHAR}
     order by create_time asc
     limit 1
     </select>

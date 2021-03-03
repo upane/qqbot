@@ -1,8 +1,8 @@
 package com.handcraft.mapper;
 
-import com.handcraft.pojo.ImgInfo;
 import com.handcraft.pojo.LocalPic;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,9 +13,11 @@ public interface LocalPicMapper {
 
     int batchadd(List<LocalPic> localPics);
 
+    int insert(LocalPic record);
+
     int delete(String uuid);
 
-    LocalPic queryone();
+    LocalPic queryOneByKind(@Param("picType") String picType);
 
-    LocalPic queryonese();
+
 }

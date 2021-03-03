@@ -98,21 +98,6 @@ public class AllPrivateListener {
         sender.SENDER.sendPrivateMsg(msg, str);
     }
 
-    @Filter(value = {"local"})
-    public void localpic(PrivateMsg msg, MsgSender sender){
-        try {
-            LocalPic localPic=localPicService.selectone();
-            CQCode cqCode=cqCodeUtil.getCQCode_Image(localPic.getImgPath());
-            localPicService.delete(localPic);
-            sender.SENDER.sendPrivateMsg(msg, String.valueOf(cqCode));
-        }catch (Exception e){
-            if(e instanceof NullPointerException){
-                sender.SENDER.sendPrivateMsg(msg, "没图了~~~");
-            }else {
-                sender.SENDER.sendPrivateMsg(msg, "本地图片读取错误");
-            }
-        }
-    }
 //    @Listen(MsgGetTypes.privateMsg)
     @Filter(value = {"se"})
     public void sexImg(PrivateMsg msg, MsgSender sender) {
@@ -172,7 +157,7 @@ public class AllPrivateListener {
     @Filter(value = {"二次元","二刺猿","two","涩.*","来点色图","来份色图","来分色图","来张色图","来份涩图","来分涩图","涩图","2"})
     public void privlocalpic(PrivateMsg msg, MsgSender sender){
         try {
-            LocalPic localPic=localPicService.selectone();
+            LocalPic localPic=localPicService.queryOneByKind("1");
             CQCode cqCode=cqCodeUtil.getCQCode_Image(localPic.getImgPath());
             localPicService.delete(localPic);
             sender.SENDER.sendPrivateMsg(msg, String.valueOf(cqCode));
@@ -187,7 +172,39 @@ public class AllPrivateListener {
     @Filter(value = {"three","三次元","写真","兔子",".*兔","大大大","色图","3"})
     public void localpicse(PrivateMsg msg, MsgSender sender){
         try {
-            LocalPic localPic=localPicService.selectonese();
+            LocalPic localPic=localPicService.queryOneByKind("2");
+            CQCode cqCode=cqCodeUtil.getCQCode_Image(localPic.getImgPath());
+            localPicService.delete(localPic);
+            sender.SENDER.sendPrivateMsg(msg, String.valueOf(cqCode));
+        }catch (Exception e){
+            if(e instanceof NullPointerException){
+                sender.SENDER.sendPrivateMsg(msg, "没图了~~~");
+            }else {
+                sender.SENDER.sendPrivateMsg(msg, "本地图片读取错误");
+            }
+        }
+
+    }
+    @Filter(value = {"GG","gg"})
+    public void localpicseGG(PrivateMsg msg, MsgSender sender){
+        try {
+            LocalPic localPic=localPicService.queryOneByKind("3");
+            CQCode cqCode=cqCodeUtil.getCQCode_Image(localPic.getImgPath());
+            localPicService.delete(localPic);
+            sender.SENDER.sendPrivateMsg(msg, String.valueOf(cqCode));
+        }catch (Exception e){
+            if(e instanceof NullPointerException){
+                sender.SENDER.sendPrivateMsg(msg, "没图了~~~");
+            }else {
+                sender.SENDER.sendPrivateMsg(msg, "本地图片读取错误");
+            }
+        }
+
+    }
+    @Filter(value = {"MM","mm"})
+    public void localpicseMM(PrivateMsg msg, MsgSender sender){
+        try {
+            LocalPic localPic=localPicService.queryOneByKind("4");
             CQCode cqCode=cqCodeUtil.getCQCode_Image(localPic.getImgPath());
             localPicService.delete(localPic);
             sender.SENDER.sendPrivateMsg(msg, String.valueOf(cqCode));

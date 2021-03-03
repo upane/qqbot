@@ -189,7 +189,7 @@ public class AllGroupListener {
     @Filter(value = {"二次元","二刺猿","two","涩.*","来点色图","来份色图","来分色图","来张色图","来份涩图","来分涩图","涩图","2"})
     public void localpic(GroupMsg msg, MsgSender sender){
         try {
-            LocalPic localPic=localPicService.selectone();
+            LocalPic localPic=localPicService.queryOneByKind("1");
             CQCode cqCode=cqCodeUtil.getCQCode_Image(localPic.getImgPath());
             localPicService.delete(localPic);
             sender.SENDER.sendGroupMsg(msg, String.valueOf(cqCode));
@@ -206,7 +206,43 @@ public class AllGroupListener {
     @Filter(value = {"three","三次元","写真","兔子",".*兔","大大大","色图","3","色"})
     public void localpicse(GroupMsg msg, MsgSender sender){
         try {
-            LocalPic localPic=localPicService.selectonese();
+            LocalPic localPic=localPicService.queryOneByKind("2");
+            CQCode cqCode=cqCodeUtil.getCQCode_Image(localPic.getImgPath());
+            localPicService.delete(localPic);
+            sender.SENDER.sendGroupMsg(msg, String.valueOf(cqCode));
+        }catch (Exception e){
+            if(e instanceof NullPointerException){
+                sender.SENDER.sendGroupMsg(msg, "没图了~~~");
+            }else {
+                sender.SENDER.sendGroupMsg(msg, "本地图片读取错误");
+            }
+        }
+    }
+
+    @Async(value="image2ThreadPool")
+    @Check(type = FunEnum.FUNCTION_SETU)
+    @Filter(value = {"GG","gg"})
+    public void localpicseGG(GroupMsg msg, MsgSender sender){
+        try {
+            LocalPic localPic=localPicService.queryOneByKind("3");
+            CQCode cqCode=cqCodeUtil.getCQCode_Image(localPic.getImgPath());
+            localPicService.delete(localPic);
+            sender.SENDER.sendGroupMsg(msg, String.valueOf(cqCode));
+        }catch (Exception e){
+            if(e instanceof NullPointerException){
+                sender.SENDER.sendGroupMsg(msg, "没图了~~~");
+            }else {
+                sender.SENDER.sendGroupMsg(msg, "本地图片读取错误");
+            }
+        }
+
+    }
+    @Async(value="image2ThreadPool")
+    @Check(type = FunEnum.FUNCTION_SETU)
+    @Filter(value = {"MM","mm"})
+    public void localpicseMM(GroupMsg msg, MsgSender sender){
+        try {
+            LocalPic localPic=localPicService.queryOneByKind("4");
             CQCode cqCode=cqCodeUtil.getCQCode_Image(localPic.getImgPath());
             localPicService.delete(localPic);
             sender.SENDER.sendGroupMsg(msg, String.valueOf(cqCode));
