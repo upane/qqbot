@@ -154,6 +154,18 @@ public class CreateApiMsgImpl implements CreateApiMsg {
         return res;
     }
 
+    @Override
+    public String nbnhhsh( String key) {
+        String sourString= msgCreate.okHttpPostMethod("https://lab.magiconch.com/api/nbnhhsh/guess", "{\"text\":\""+key+"\"}");
+        JSONObject obj = JSONObject.parseObject(sourString);
+        JSONObject content = obj.getJSONObject("data");
+        JSONObject info = content.getJSONObject("info");
+        String text = info.getString("text");
+        StringBuffer res =new StringBuffer();
+        res.append(text);
+        return res.toString();
+    }
+
     private static String format(String Json) {
         JSONObject obj = JSONObject.parseObject(Json);
         String content = obj.getString("content");

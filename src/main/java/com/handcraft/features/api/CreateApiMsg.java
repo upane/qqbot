@@ -55,5 +55,9 @@ public interface CreateApiMsg {
      */
     StringBuffer getnewBotAI(String talk);
 
+    //今天的我
     String getTodayMe(String code, String name) ;
+
+    //
+    String nbnhhsh( String key) ;
 }

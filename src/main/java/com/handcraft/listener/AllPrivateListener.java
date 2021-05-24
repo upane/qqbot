@@ -185,7 +185,7 @@ public class AllPrivateListener {
         }
 
     }
-    @Filter(value = {"GG","gg"})
+    @Filter(value = {"GG","gg","7"})
     public void localpicseGG(PrivateMsg msg, MsgSender sender){
         try {
             LocalPic localPic=localPicService.queryOneByKind("3");
@@ -201,7 +201,7 @@ public class AllPrivateListener {
         }
 
     }
-    @Filter(value = {"MM","mm"})
+    @Filter(value = {"MM","mm","5"})
     public void localpicseMM(PrivateMsg msg, MsgSender sender){
         try {
             LocalPic localPic=localPicService.queryOneByKind("4");

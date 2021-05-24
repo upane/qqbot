@@ -45,41 +45,41 @@ public class GetPixivDayImg {
     @Resource
     ImgDownload imgDownload;
 
-    @Scheduled(cron = "0 0 11 * * ?")
-    public void getDayImg() {
-        BotSender sender = botManager.defaultBot().getSender();
-        List<ImgInfo> imgInfos = pixivMsg.getDay();
-        //预下载
-        for (ImgInfo imgInfo : imgInfos) {
-            try {
-                imgDownload.download(imgInfo.getImageUrl(), null, imgInfo.getUuid());
-                imgInfoMapper.addImg(imgInfo);
-            } catch (Exception ignored) {
-            }
-        }
-    }
+//    @Scheduled(cron = "0 0 11 * * ?")
+//    public void getDayImg() {
+//        BotSender sender = botManager.defaultBot().getSender();
+//        List<ImgInfo> imgInfos = pixivMsg.getDay();
+//        //预下载
+//        for (ImgInfo imgInfo : imgInfos) {
+//            try {
+//                imgDownload.download(imgInfo.getImageUrl(), null, imgInfo.getUuid());
+//                imgInfoMapper.addImg(imgInfo);
+//            } catch (Exception ignored) {
+//            }
+//        }
+//    }
 
-    @Scheduled(cron = "0 0 12 * * ?")
-    public void sendDayImg() {
-        BotSender sender = botManager.defaultBot().getSender();
-        //sender.SENDER.sendGroupMsg("361081715", "今日P站日榜");
-        List<ImgInfo> imgInfos = imgInfoMapper.queryImgListByDate(stringUtil.getDate());
-        for (ImgInfo imgInfo : imgInfos) {
-            CQCode cqCode_image = cqCodeUtil.getCQCode_Image(System.getProperty("user.dir") + "\\image\\" + imgInfo.getUuid() + imgInfo.getFormat());
-            try {
-                StringBuffer str = new StringBuffer();
-                //写入图片CQ码
-                str.append(cqCode_image.toString() + "\n");
-                str.append("标题: " + imgInfo.getTitle() + "\n");
-                str.append("P站ID: " + imgInfo.getId() + "\n");
-                str.append("tag: " + imgInfo.getTags());
-                //挥手
-                sender.SENDER.sendGroupMsg("361081715", str.toString());
-                sender.SENDER.sendGroupMsg("641057857", str.toString());
-            } catch (Exception e) {
-                continue;
-            }
-        }
-    }
+//    @Scheduled(cron = "0 0 12 * * ?")
+//    public void sendDayImg() {
+//        BotSender sender = botManager.defaultBot().getSender();
+//        //sender.SENDER.sendGroupMsg("361081715", "今日P站日榜");
+//        List<ImgInfo> imgInfos = imgInfoMapper.queryImgListByDate(stringUtil.getDate());
+//        for (ImgInfo imgInfo : imgInfos) {
+//            CQCode cqCode_image = cqCodeUtil.getCQCode_Image(System.getProperty("user.dir") + "\\image\\" + imgInfo.getUuid() + imgInfo.getFormat());
+//            try {
+//                StringBuffer str = new StringBuffer();
+//                //写入图片CQ码
+//                str.append(cqCode_image.toString() + "\n");
+//                str.append("标题: " + imgInfo.getTitle() + "\n");
+//                str.append("P站ID: " + imgInfo.getId() + "\n");
+//                str.append("tag: " + imgInfo.getTags());
+//                //挥手
+//                sender.SENDER.sendGroupMsg("361081715", str.toString());
+//                sender.SENDER.sendGroupMsg("641057857", str.toString());
+//            } catch (Exception e) {
+//                continue;
+//            }
+//        }
+//    }
 
 }

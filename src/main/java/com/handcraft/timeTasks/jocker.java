@@ -53,14 +53,14 @@ public class jocker {
     @Autowired
     LocalPicMapper localPicMapper;
 
-    @Scheduled(cron = "0 05 12 * * ? ")
-    public void everyDayNews(){
-
-        String url = "https://api.tophub.fun/v2/GetAllInfoGzip?id=135&page=0";
-        String url2 = "https://api.tophub.fun/v2/GetAllInfoGzip?id=136&page=0";
-        downlodjocker(url,3);
-        downlodjocker(url2,4);
-    }
+//    @Scheduled(cron = "0 05 12 * * ? ")
+//    public void everyDayNews(){
+//
+//        String url = "https://api.tophub.fun/v2/GetAllInfoGzip?id=135&page=0";
+//        String url2 = "https://api.tophub.fun/v2/GetAllInfoGzip?id=136&page=0";
+//        downlodjocker(url,3);
+//        downlodjocker(url2,4);
+//    }
 
 //    @Scheduled(cron = " 0 10 18 * * ? ")
 //    public void everyLOLday(){

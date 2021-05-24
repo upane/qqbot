@@ -221,7 +221,7 @@ public class AllGroupListener {
 
     @Async(value="image2ThreadPool")
     @Check(type = FunEnum.FUNCTION_SETU)
-    @Filter(value = {"GG","gg"})
+    @Filter(value = {"GG","gg","7"})
     public void localpicseGG(GroupMsg msg, MsgSender sender){
         try {
             LocalPic localPic=localPicService.queryOneByKind("3");
@@ -239,7 +239,7 @@ public class AllGroupListener {
     }
     @Async(value="image2ThreadPool")
     @Check(type = FunEnum.FUNCTION_SETU)
-    @Filter(value = {"MM","mm"})
+    @Filter(value = {"MM","mm","5"})
     public void localpicseMM(GroupMsg msg, MsgSender sender){
         try {
             LocalPic localPic=localPicService.queryOneByKind("4");
@@ -304,7 +304,7 @@ public class AllGroupListener {
     @Check(type = FunEnum.FUNCTION_SWEET)
     @Filter(value = {"[舔,甜]"})
     public void sweet(GroupMsg msg, MsgSender sender) {
-        String at = KQCodeUtils.INSTANCE.toCq("at", "qq=" + msg.getQQ());
+//        String at = KQCodeUtils.INSTANCE.toCq("at", "qq=" + msg.getQQ());
         String sendMsg;
         switch (msg.getMsg().substring(0, 1)) {
             case "舔":
@@ -317,7 +317,7 @@ public class AllGroupListener {
             default:
                 return;
         }
-        sender.SENDER.sendGroupMsg(msg, at + " " + sendMsg);
+        sender.SENDER.sendGroupMsg(msg, sendMsg);
     }
     //定向嘴甜模式
 

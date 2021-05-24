@@ -13,7 +13,7 @@
         from slimebot.imginfo
         where date = #{date};
     </select>
-    <insert id="addImg" parameterType="imgInfo">
+    <insert id="addImg" >
         insert into slimebot.imginfo(uuid, id, title, imageUrl, tags, date,format)
         values (#{uuid}, #{id}, #{title}, #{imageUrl}, #{tags}, NOW(),#{format});
     </insert>
